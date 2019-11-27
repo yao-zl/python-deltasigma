@@ -16,6 +16,8 @@
 """This module provides the undbm() function.
 """
 
+from __future__ import division
+
 import numpy as np
 
 from ._utils import carray, restore_input_form, save_input_form

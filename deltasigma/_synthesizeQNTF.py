@@ -98,7 +98,7 @@ def synthesizeQNTF(order=4, OSR=64, f0=0., NG=-60, ING=-20, n_im=None):
 
     """
     if n_im is None:
-        n_im = np.floor(order/3)
+        n_im = int(np.floor(order/3))
     debug_it = 0
     if n_im == 0:
         # Use synthesizeNTF to get an NTF with the specified NG; ignore ING

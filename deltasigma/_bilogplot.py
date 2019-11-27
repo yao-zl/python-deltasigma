@@ -133,7 +133,7 @@ def bilogplot(V, f0, fbin, x, y, **fmt):
     ax.set_xlim([-x[1], x[2]])
     ax.set_ylim([y[0], y[1]])
     plt.grid(True)
-    ytix = range(y[0], y[1] + 1, y[2])
+    ytix = list(range(y[0], y[1] + 1, y[2]))
     ax.yaxis.set_ticks(ytix)
     # we do not support axis labels
     # set_(gca,'YTickLabel', axisLabels(ytix, y[3]))
@@ -167,7 +167,7 @@ def _logsmooth2(X, inBin, nbin=8):
     while m < N:
         startbin = np.concatenate((startbin, np.array((m,))))
         n = min(n*1.1, 2**10)
-        m = np.round(m + n)
+        m = int(np.round(m + n))
     stopbin = np.concatenate((startbin[1:] - 1, np.array((N,))))
     f = ((startbin + stopbin)/2. - 1)/N
     p = np.zeros(f.shape)

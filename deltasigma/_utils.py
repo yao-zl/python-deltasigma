@@ -18,6 +18,8 @@
  that do not find a direct replacement in numpy/scipy.
 """
 
+from __future__ import division
+
 import collections
 import fractions
 from fractions import Fraction as Fr
@@ -224,13 +226,13 @@ def diagonal_indices(a, offset=0):
     """
     di, dj = np.diag_indices_from(a[:min(a.shape), :min(a.shape)])
     if offset > 0:
-        di, dj = zip(*[(i, j)
-                     for i, j in zip(di, dj + offset) if 0 <= j < a.shape[1]])
+        di, dj = list(zip(*[(i, j)
+                     for i, j in zip(di, dj + offset) if 0 <= j < a.shape[1]]))
     elif offset == 0:
         pass
     else:
-        di, dj = zip(*[(i, j)
-                     for i, j in zip(di - offset, dj) if 0 <= i < a.shape[0]])
+        di, dj = list(zip(*[(i, j)
+                     for i, j in zip(di - offset, dj) if 0 <= i < a.shape[0]]))
     return di, dj
 
 

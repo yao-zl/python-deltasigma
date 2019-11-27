@@ -16,6 +16,8 @@
 """Module providing the dsclansNTF() function
 """
 
+from __future__ import division
+
 import numpy as np
 
 from ._utils import carray

@@ -68,7 +68,7 @@ def SIunits(x):
         a = 3300.
         unit = 'g'
         f, p = SIunits(a)
-        print "Float 'a' in engineering notation: %.3f %s%s" % (a/f, p, unit)
+        print("Float 'a' in engineering notation: %.3f %s%s" % (a/f, p, unit))
 
     Prints::
 

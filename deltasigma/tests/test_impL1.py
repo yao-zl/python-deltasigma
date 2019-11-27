@@ -48,7 +48,7 @@ class TestTestTemplate(unittest.TestCase):
     def test_impL1_lti(self):
         """Test function for impL1() 3/4"""
         sys1 = (np.array([-.4]), np.array([0, 0]), 1)
-        tf = lti(*sys1)
+        tf = lti(*sys1).to_tf()
         r4 = ds.impL1(tf, n=10)
         self.assertTrue(np.allclose(self.r2, r4, atol=1e-8, rtol=1e-4))
 

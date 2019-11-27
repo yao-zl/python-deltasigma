@@ -1,0 +1,46 @@
+
+import numpy as np
+from numpy.distutils.system_info import get_info
+
+# get blas information to compile the cython extensions
+# 
+# The order of finding the localtions of blas is the following:
+#  1. environment variable (BLAS)
+#  2. section in site.cfg
+#     The file 'site.cfg' is looked for in
+#     1) Directory of main setup.py file being run.
+#     2) Home directory of user running the setup.py file as ~/.numpy-site.cfg
+#     3) System wide directory (location of this file ...)
+#  3. All section in site.cfg
+#  4. Appropiate defaults are used if nothing is specified.
+#
+# site.cfg Example:
+# ----------------------
+# [ALL]
+# library_dirs = /usr/lib:/usr/local/lib:/opt/lib
+# include_dirs = /usr/include:/usr/local/include:/opt/include
+# src_dirs = /usr/local/src:/opt/src
+# # search static libraries (.a) in preference to shared ons (.so)
+# search_static_first = 0
+# 
+# [blas]
+# libraries = blas, cblas
+# ----------------------
+# for more information in numpy.distutils.system_info
+
+blas_info = get_info('blas')
+include_dirs = [np.get_include()]
+include_dirs = include_dirs + blas_info.get('include_dirs', [])
+library_dirs = []
+library_dirs = library_dirs + blas_info.get('library_dirs', [])
+libraries = []
+libraries = libraries + blas_info.get('libraries', [])
+
+def make_ext(modname, pyxfilename):
+    from distutils.extension import Extension
+    return Extension(name=modname,
+                     sources=[pyxfilename],
+                     include_dirs=include_dirs,
+                     library_dirs=library_dirs,
+                     libraries=libraries)
+

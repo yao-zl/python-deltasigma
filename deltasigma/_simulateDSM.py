@@ -59,7 +59,7 @@ except ImportError as e:
 
 try:
     import pyximport
-    pyximport.install(setup_args=setup_args, inplace=True)
+    pyximport.install(setup_args=setup_args)
     from ._simulateDSM_scipy_blas import simulateDSM as _simulateDSM_scipy_blas
 except ImportError as e:
     if _debug:

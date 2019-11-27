@@ -17,6 +17,8 @@
 point(s) given by the user.
 """
 
+from __future__ import division
+
 import numpy as np
 
 from ._evalRPoly import evalRPoly

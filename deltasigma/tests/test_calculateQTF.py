@@ -130,22 +130,22 @@ class TestCalculateQTF(unittest.TestCase):
         # NTF CHECK
         allsortedclose(ntf[0], self.ntf_zeros, atol=1e-3, rtol=1e-3)
         allsortedclose(ntf[1], self.ntf_poles, atol=1e-3, rtol=1e-3)
-        allsortedclose(ntf[2], self.ntf_k, atol=1e-3, rtol=1e-3)
+        allsortedclose(np.reshape(ntf[2], (1,)), np.reshape(self.ntf_k, (1,)), atol=1e-3, rtol=1e-3)
         # STF CHECK
         allsortedclose(stf[0], self.stf_zeros, atol=1e-3, rtol=1e-3)
         allsortedclose(stf[1], self.stf_poles, atol=1e-3, rtol=1e-3)
-        allsortedclose(stf[2], self.stf_k, atol=1e-3, rtol=1e-3)
+        allsortedclose(np.reshape(stf[2], (1,)), np.reshape(self.stf_k, (1,)), atol=1e-3, rtol=1e-3)
         #INTF CHECK
         # the numerator coefficients are all zeros anyways. Big numeric
         # errors for worthless information
         #allsortedclose(intf[0], self.intf_zeros, atol=1e-3, rtol=1e-3)
         allsortedclose(intf[1], self.intf_poles, atol=1e-3, rtol=1e-3)
-        allsortedclose(intf[2], self.intf_k, atol=1e-3, rtol=1e-3)
+        allsortedclose(np.reshape(intf[2], (1,)), np.reshape(self.intf_k, (1,)), atol=1e-3, rtol=1e-3)
         # ISTF CHECK
         # the zeros fail on travis ... again, no real importance
         #allsortedclose(istf[0], self.istf_zeros, atol=1e-3, rtol=1e-3)
         allsortedclose(istf[1], self.istf_poles, atol=1e-3, rtol=1e-3)
-        allsortedclose(istf[2], self.istf_k, atol=1e-3, rtol=1e-3)
+        allsortedclose(np.reshape(istf[2], (1,)), np.reshape(self.istf_k, (1,)), atol=1e-3, rtol=1e-3)
 
 def allsortedclose(a, b, atol=1e-3, rtol=1e-3):
     if np.iscomplex(a).any():

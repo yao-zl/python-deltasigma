@@ -16,6 +16,8 @@
 """This module provides the ds_f1f2() function.
 """
 
+from __future__ import division
+
 def ds_f1f2(OSR=64, f0=0., complex_flag=False):
     """[f1, f2] = ds_f1f2(OSR=64, f0=0, complex_flag=0)
     This function has no original docstring.

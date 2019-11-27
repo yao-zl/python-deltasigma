@@ -217,20 +217,20 @@ def stuffABCD(a, g, b, c, form='CRFB'):
         if odd_1:
             if order_1 >= 3:
                 supdiag = diagonal[2:order_1:2] - 1
-                ABCD[supdiag] = -g[:(order_1 - 1)/2.]
+                ABCD[supdiag] = -g[:int((order_1 - 1)/2.)]
         else:
             # rows to have g*(following row) subtracted.
             multg = np.arange(0, order_1, 2)
-            ABCD[multg, :] = ABCD[multg, :] - np.diag(g[:order_1/2.]) * \
+            ABCD[multg, :] = ABCD[multg, :] - np.diag(g[:int(order_1/2.)]) * \
                              ABCD[multg + 1, :]
         if odd_2:
             if order_2 >= 3:
                 supdiag = diagonal[order_1 + 1:order:2] - 1
-                ABCD[supdiag] = -g[:(order_1 - 1)/2.]
+                ABCD[supdiag] = -g[:int((order_1 - 1)/2.)]
         else:
             # rows to have g*(following row) subtracted.
             multg = np.arange(order_1, order, 2)
-            gg = g[(order_1 - odd_1)/2:]
+            gg = g[int((order_1 - odd_1)/2):]
             ABCD[multg, :] = ABCD[multg, :] - np.diag(gg)*ABCD[multg + 1, :]
         # Rows to have c*(preceding row) added.
         multc = np.hstack((np.arange(2, order_1, 2), 

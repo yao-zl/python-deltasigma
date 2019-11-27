@@ -17,6 +17,8 @@
 Square (RMS) of a vector.
 """
 
+from __future__ import division
+
 import numpy as np
 import numpy.linalg as la
 

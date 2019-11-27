@@ -170,7 +170,7 @@ def simulateSNR(arg1, osr, amp=None, f0=0, nlev=2, f=None, k=13,
     """
     # Look at arg1 and decide if the system is quadrature
     quadrature_ntf = False
-    if callable(arg1):
+    if isinstance(arg1, collections.Callable):
         raise ValueError('There is no support for NTFs described through ' +
                          'a function.')
     elif not isinstance(arg1, np.ndarray):
@@ -224,10 +224,10 @@ def simulateSNR(arg1, osr, amp=None, f0=0, nlev=2, f=None, k=13,
                                  np.arange(Ntransient/2)))
     if not quadrature:
         tone = M*np.sin(2*np.pi*F/N*np.arange(N + Ntransient))
-        tone[:Ntransient/2] = tone[:Ntransient/2] * soft_start
+        tone[:int(Ntransient/2)] = tone[:int(Ntransient/2)] * soft_start
     else:
         tone = M*np.exp(2j*np.pi*F/N * np.arange(N + Ntransient))
-        tone[:Ntransient/2] = tone[:Ntransient/2] * soft_start
+        tone[:int(Ntransient/2)] = tone[:int(Ntransient/2)] * soft_start
         if not quadrature_ntf:
             tone = tone.reshape((1, -1))
             tone = np.vstack((np.real(tone), np.imag(tone)))

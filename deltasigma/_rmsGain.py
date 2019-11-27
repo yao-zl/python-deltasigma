@@ -16,6 +16,8 @@
 """Module providing the rmsGain() function
 """
 
+from __future__ import division
+
 import numpy as np
 from scipy.linalg import norm
 

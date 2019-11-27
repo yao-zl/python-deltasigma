@@ -18,7 +18,7 @@ setup(
     package_data={
       'deltasigma': ['tests/test_data/*.mat', 'tests/test_data/*.txt']
     },
-    install_requires=['numpy', 'scipy>=0.11.0', 'matplotlib>=1.1.1'],
+    install_requires=['numpy', 'scipy>=0.16.0', 'matplotlib>=1.1.1'],
     zip_safe=False,
     include_package_data=True,
     author="Giuseppe Venturini and others",
@@ -44,6 +44,8 @@ setup(
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.4"]
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6"]
 )
 
