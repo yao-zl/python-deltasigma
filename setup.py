@@ -2,7 +2,19 @@
 
 import os
 from setuptools import setup, find_packages
-__version__ = "0.2.2"
+import re
+
+# Parse version number
+def find_version(file_path):
+    with open(file_path, 'r') as fp:
+        version_file = fp.read()
+        version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                                  version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise NameError("Version string must be defined in {}.".format(file_path))
+
+version = find_version("deltasigma/__init__.py")
 
 def read(fname):
     try:
@@ -13,7 +25,7 @@ def read(fname):
 
 setup(
     name='deltasigma',
-    version=__version__,
+    version=version,
     packages=find_packages(),
     package_data={
       'deltasigma': ['*.pyxbld', 'tests/test_data/*.mat', 'tests/test_data/*.txt']
