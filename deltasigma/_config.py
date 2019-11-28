@@ -16,7 +16,10 @@
 """Module providing configuration switches.
 """
 
+import os
 import sys
+
+from numpy.distutils.system_info import get_info
 
 # should synthesizeNTF run the optimization routine?
 optimize_NTF = True
@@ -31,3 +34,8 @@ _debug = False
 # setup_args for pyximport.install
 setup_args = {"script_args":(["--compiler=mingw32"]
                              if sys.platform == 'win32' else [])}
+
+if sys.platform == 'win32':
+    blas_info = get_info('blas')
+    for path in blas_info.get('library_dirs', []):
+        os.environ['PATH'] = path + ';' + os.environ['PATH']
