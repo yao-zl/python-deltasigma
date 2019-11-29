@@ -182,7 +182,7 @@ def simulateQDSM(u, arg2, nlev=2, x0=None):
             sys = (A, B2, Ctemp, np.zeros((1, 1)))
             n, d = scipy.signal.ss2tf(*sys)
             sysresp[i, :] = freqz(n[0, :], d, w)[1]
-        C = lstsq(sysresp.T, desired.T)[0].reshape((1, -1))
+        C = lstsq(sysresp.T, desired.T, rcond=-1)[0].reshape((1, -1))
         # !!!! Assume stf=1
         B1 = -B2
         B = np.hstack((B1, B2))
