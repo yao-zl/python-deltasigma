@@ -93,7 +93,7 @@ def mapCtoD(sys_c, t=(0, 1), f0=0.):
         LFc = lti([[0, 0], [1, 0]], [[1, -1], [0, -1.5]], [[0, 1]], [[0, 0]])
         tdac = [0, 1]
         LF, Gp = mapCtoD(LFc, tdac)
-        LF = lti(*LF)
+        LF = lti(*LF).to_ss()
         ABCD = np.vstack((
                 np.hstack((LF.A, LF.B)),
                 np.hstack((LF.C, LF.D))

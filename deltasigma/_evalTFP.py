@@ -80,7 +80,7 @@ def evalTFP(Hs, Hz, f):
         L0c = _get_zpk((Ac, Bc[:, 0].reshape((-1, 1)), Cc, Dc[0, 0].reshape(1, 1)))
         tdac = [0, 1]
         LF, Gp = mapCtoD(LFc, tdac)
-        LF = lti(*LF)
+        LF = lti(*LF).to_ss()
         ABCD = np.vstack((np.hstack((LF.A, LF.B)),
                           np.hstack((LF.C, LF.D))
                         ))
@@ -109,7 +109,7 @@ def evalTFP(Hs, Hz, f):
         L0c = _get_zpk((Ac, Bc[:, 0].reshape((-1, 1)), Cc, Dc[0, 0].reshape(1, 1)))
         tdac = [0, 1]
         LF, Gp = mapCtoD(LFc, tdac)
-        LF = lti(*LF)
+        LF = lti(*LF).to_ss()
         ABCD = np.vstack((np.hstack((LF.A, LF.B)),
                           np.hstack((LF.C, LF.D))
                         ))

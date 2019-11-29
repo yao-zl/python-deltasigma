@@ -169,7 +169,8 @@ def minreal(tf, tol=None):
     if (hasattr(tf, 'inputs') and not tf.inputs == 1) or \
        (hasattr(tf, 'outputs') and not tf.outputs == 1):
         raise TypeError("Only SISO transfer functions can be evaluated.")
-    if hasattr(tf, 'zeros') and hasattr(tf, 'poles'):
+    if hasattr(tf, 'zeros') and hasattr(tf, 'poles') and \
+            (hasattr(tf, 'k') or hasattr(tf, 'gain')):
         # LTI objects have poles and zeros,
         zeros = tf.zeros
         poles = tf.poles
@@ -442,11 +443,12 @@ def _get_zpk(arg, input=0):
         A, B, C, D = partitionABCD(arg)
         z, p, k = ss2zpk(A, B, C, D, input=input)
     elif isinstance(arg, lti):
-        z, p, k = arg.zeros, arg.poles, arg.gain
+        sys = arg.to_zpk()
+        z, p, k = sys.zeros, sys.poles, sys.gain
     elif _is_zpk(arg):
         z, p, k = np.atleast_1d(arg[0]), np.atleast_1d(arg[1]), arg[2]
     elif _is_num_den(arg):
-        sys = lti(*arg)
+        sys = lti(*arg).to_zpk()
         z, p, k = sys.zeros, sys.poles, sys.gain
     elif _is_A_B_C_D(arg):
         z, p, k = ss2zpk(*arg, input=input)
@@ -473,7 +475,7 @@ def _get_zpk(arg, input=0):
                     continue
             else:
                 if ri == input:
-                    sys = lti(*i)
+                    sys = lti(*i).to_zpk()
                     z, p, k = sys.zeros, sys.poles, sys.gain
                     break
                 else:
@@ -606,16 +608,17 @@ def _getABCD(arg):
         # ABCD matrix
         A, B, C, D = partitionABCD(arg)
     elif isinstance(arg, lti):
-        A, B, C, D = arg.A, arg.B, arg.C, np.atleast_2d(arg.D)
+        sys = arg.to_ss()
+        A, B, C, D = sys.A, sys.B, sys.C, np.atleast_2d(sys.D)
     elif _is_zpk(arg) or _is_num_den(arg) or _is_A_B_C_D(arg):
-        sys = lti(*arg)
+        sys = lti(*arg).to_ss()
         A, B, C, D = sys.A, sys.B, sys.C, sys.D
     elif isinstance(arg, collections.Iterable):
         A, B, C, D = None, None, None, None
         for i in arg:
             # Note we do not check if the user has assembled a list with
             # mismatched lti representations.
-            sys = lti(*i) if not hasattr(i, 'A') else i
+            sys = lti(*i).to_ss() if not hasattr(i, 'A') else i
             if A is None:
                 A = sys.A
             elif not np.allclose(sys.A, A, atol=1e-8, rtol=1e-5):

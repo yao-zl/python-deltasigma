@@ -55,7 +55,7 @@ def cancelPZ(arg1, tol=1e-6):
 
     """
     if not isinstance(arg1, lti):
-        arg1 = lti(*arg1)
+        arg1 = lti(*arg1).to_zpk()
     z = copy.copy(arg1.zeros)
     p = copy.copy(arg1.poles)
     k = arg1.gain
