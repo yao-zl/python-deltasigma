@@ -101,7 +101,6 @@ def PlotExampleSpectrum(ntf, M=1, osr=64, f0=0, quadrature=False):
     if not quadrature:
         freq = np.linspace(0, 0.5, N/2 + 1)
         plt.plot(freq, dbv(spec0[:int(N/2) + 1]), 'c', linewidth=1)
-        plt.hold(True)
         spec_smoothed = circ_smooth(np.abs(spec0)**2., 16)
         plt.plot(freq, dbp(spec_smoothed[:int(N/2) + 1]), 'b', linewidth=3)
         Snn = np.abs(evalTF(ntf, np.exp(2j*np.pi*freq)))**2 * 2/12*(delta/M)**2
@@ -123,7 +122,6 @@ def PlotExampleSpectrum(ntf, M=1, osr=64, f0=0, quadrature=False):
         freq = np.linspace(-0.5, 0.5, N + 1)
         freq = freq[:-1]
         plt.plot(freq, dbv(spec0), 'c', linewidth=1)
-        plt.hold(True)
         spec_smoothed = circ_smooth(abs(spec0)**2, 16)
         plt.plot(freq, dbp(spec_smoothed), 'b', linewidth=3)
         Snn = abs(evalTF(ntf, np.exp(2j * np.pi * freq))) ** 2 * 2 / 12 * (delta / M) ** 2

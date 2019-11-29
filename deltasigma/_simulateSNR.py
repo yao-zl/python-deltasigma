@@ -136,7 +136,6 @@ def simulateSNR(arg1, osr, amp=None, f0=0, nlev=2, f=None, k=13,
         snr_pred, amp, _, _, _ = predictSNR(H,OSR)
         snr, amp = simulateSNR(H, OSR)
         plt.plot(amp, snr_pred, 'b', label='Predicted')
-        plt.hold(True)
         plt.plot(amp, snr, 'go', label='Simulated')
         plt.grid(True)
         figureMagic([-100, 0], 10, None,
@@ -156,7 +155,6 @@ def simulateSNR(arg1, osr, amp=None, f0=0, nlev=2, f=None, k=13,
         snr_pred, amp, _, _, _ = predictSNR(H,OSR)
         snr, amp = simulateSNR(H, OSR)
         plt.plot(amp, snr_pred, 'b', label='Predicted')
-        plt.hold(True)
         plt.plot(amp, snr, 'go', label='Simulated')
         plt.grid(True)
         figureMagic([-100, 0], 10, None,

@@ -82,7 +82,6 @@ def simulateDSM(u, arg2, nlev=2, x0=0.):
         t = np.arange(85)
         # the equivalent of MATLAB 'stairs' is step in matplotlib
         plt.step(t, u[t], 'g', label='u(n)')
-        plt.hold(True)
         plt.step(t, v[t], 'b', label='v(n)')
         plt.axis([0, 85, -1.2, 1.2]);
         plt.ylabel('u, v');

@@ -88,7 +88,6 @@ def logsmooth(X, inBin, nbin=8, n=3):
         f = f[:N/2 + 1]
         plt.subplot(211)
         plt.semilogx(f, dbv(U[:N/2 + 1]))
-        plt.hold(True)
         inBin = np.round(freq/Fs*N)
         fS, US = logsmooth(U, inBin)
         plt.semilogx(fS*Fs, US, 'r', linewidth=2.5)
