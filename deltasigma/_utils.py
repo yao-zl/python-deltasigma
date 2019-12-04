@@ -27,7 +27,11 @@ if sys.version_info.major==3 and sys.version_info.minor>=3:
 else:
     from collections import Iterable
 
-import fractions
+if sys.version_info.major==3 and sys.version_info.minor>=5:
+    from math import gcd
+else:
+    from fractions import gcd
+
 from fractions import Fraction as Fr
 
 import numpy as np
@@ -57,8 +61,6 @@ def rat(x, tol):
     """
     return Fr(float(x)).limit_denominator(int(1 / float(tol))).numerator, \
         Fr(float(x)).limit_denominator(int(1 / float(tol))).denominator
-
-gcd = fractions.gcd
 
 lcm = lambda a, b: int(a * b / float(gcd(a, b)))
 lcm.__doc__ = """Calculate the Least Common Multiple of ``a`` and ``b``.\n"""
