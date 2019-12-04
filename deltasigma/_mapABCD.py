@@ -59,7 +59,7 @@ def mapABCD(ABCD, form='CRFB'):
     even = 1 - odd
     diagonal = diagonal_indices(ABCD)
     subdiag = diagonal_indices(ABCD, -1)
-    supdiag = [a[odd:order - 1:2] for a in diagonal_indices(ABCD, +1)]
+    supdiag = tuple([a[odd:order - 1:2] for a in diagonal_indices(ABCD, +1)])
     if form in ('CRFB', 'CIFB', 'CRFBD'):
         c = ABCD[subdiag]
         g = -ABCD[supdiag]
@@ -99,8 +99,8 @@ def mapABCD(ABCD, form='CRFB'):
         even = 1 - odd
         diagonal = diagonal_indices(ABCD[:order, :order])
         subdiag = diagonal_indices(ABCD[:order, :order], -1)
-        supdiag = [a[odd:order:2] for a in 
-                      diagonal_indices(ABCD[:order, :order], +1)]
+        supdiag = tuple([a[odd:order:2] for a in 
+                      diagonal_indices(ABCD[:order, :order], +1)])
         g = -ABCD[supdiag]
         c = np.concatenate((np.atleast_1d(-ABCD[0, order + 2]), ABCD[subdiag]))
         a = np.zeros((order, ))

@@ -71,10 +71,10 @@ def stuffABCD(a, g, b, c, form='CRFB'):
         ABCD[:order, order + 1] = -a
         diagonal = diagonal_indices(ABCD[:order, :order])
         ABCD[diagonal] = np.ones((order,))
-        subdiag = [i[even:order:2] for i in diagonal_indices(ABCD, -1)]
+        subdiag = tuple([i[even:order:2] for i in diagonal_indices(ABCD, -1)])
         ABCD[subdiag] = c[0, even:order:2]
         if order > odd:
-            supdiag = [i[odd:order:2] for i in diagonal_indices(ABCD[:order, :order], +1)]
+            supdiag = tuple([i[odd:order:2] for i in diagonal_indices(ABCD[:order, :order], +1)])
             ABCD[supdiag] = -g.reshape((-1,))
         # row numbers of delaying integrators
         dly = np.arange(odd + 1, order, 2)
@@ -88,7 +88,7 @@ def stuffABCD(a, g, b, c, form='CRFB'):
         diagonal = diagonal_indices(ABCD[:order, :order])
         ABCD[diagonal] = np.ones((order, ))
         # subdiag = diagonal[:order - 1:2] + 1
-        subdiag = [i[:order - 1:2] for i in diagonal_indices(ABCD, -1)]
+        subdiag = tuple([i[:order - 1:2] for i in diagonal_indices(ABCD, -1)])
         ABCD[subdiag] = c[0, 1:order:2]
         if even:
             # rows to have g*(following row) subtracted.
@@ -98,8 +98,8 @@ def stuffABCD(a, g, b, c, form='CRFB'):
         else:
             if order >= 3:
                 # supdiag = diagonal[2:order:2] - 1
-                supdiag = [i[1:order:2] for i in
-                           diagonal_indices(ABCD[:order, :order], +1)]
+                supdiag = tuple([i[1:order:2] for i in
+                           diagonal_indices(ABCD[:order, :order], +1)])
                 ABCD[supdiag] = -g.reshape((-1,))
         # rows to have c*(preceding row) added.
         multc = np.arange(2, order, 2)
@@ -118,7 +118,7 @@ def stuffABCD(a, g, b, c, form='CRFB'):
         ABCD[diagonal] = np.ones((order,))
         subdiag = diagonal_indices(ABCD, -1)
         ABCD[subdiag] = c.reshape((-1,))
-        supdiag = [i[odd:order+odd:2] for i in diagonal_indices(ABCD[:order, :order], +1)]
+        supdiag = tuple([i[odd:order+odd:2] for i in diagonal_indices(ABCD[:order, :order], +1)])
         ABCD[supdiag] = -g.reshape((-1,))
     elif form == 'CIFF':
         # B1 = (b_1 b_2... b_n), D=(b_(n+1) 0)
@@ -132,8 +132,8 @@ def stuffABCD(a, g, b, c, form='CRFB'):
         # C = (a_1 a_2... a_n)
         ABCD[order, :order] = a[0, :order]
         # supdiag = diagonal[odd + 1:order:2] - 1
-        supdiag = [i[odd:order+odd:2] for i in  
-                   diagonal_indices(ABCD[:order, :order], +1)]
+        supdiag = tuple([i[odd:order+odd:2] for i in  
+                   diagonal_indices(ABCD[:order, :order], +1)])
         ABCD[supdiag] = -g.reshape((-1,))
     elif form == 'CRFBD':
         # C=(0 0...c_n)
@@ -146,8 +146,8 @@ def stuffABCD(a, g, b, c, form='CRFB'):
         ABCD[diagonal] = np.ones((order, ))
         # row numbers of delaying integrators
         dly = np.arange(odd, order, 2)
-        subdiag = [np.atleast_1d(i)[dly] for i in
-                   diagonal_indices(ABCD[:order, :order], -1)]
+        subdiag = tuple([np.atleast_1d(i)[dly] for i in
+                   diagonal_indices(ABCD[:order, :order], -1)])
         ABCD[subdiag] = c[0, dly]
         supdiag = [np.atleast_1d(i)[dly] for i in 
                    diagonal_indices(ABCD[:order, :order], +1)]
@@ -170,9 +170,9 @@ def stuffABCD(a, g, b, c, form='CRFB'):
         # rows to have c*(preceding row) added.
         multc = np.arange(1, order, 2)
         if order > 2:
-            ABCD[[i[1::2] for i in subdiag]] = c[0, 2::2]
+            ABCD[tuple([i[1::2] for i in subdiag])] = c[0, 2::2]
         if even:
-            ABCD[[i[::2] for i in supdiag]] = -g.reshape((-1,))
+            ABCD[tuple([i[::2] for i in supdiag])] = -g.reshape((-1,))
         else:
             # subtract g*(following row) from the multc rows
             ABCD[multc, :] = ABCD[multc, :] - np.dot(np.diag(g[0, :]), ABCD[multc + 1, :])
@@ -212,11 +212,11 @@ def stuffABCD(a, g, b, c, form='CRFB'):
         ABCD[diagonal] = np.ones((1, order))
         i = np.hstack((np.arange(0, order_1 - 1, 2),
                        np.arange(order - order_2, order, 2)))
-        subdiag = diagonal[i] + 1
+        subdiag = tuple(diagonal[i] + 1)
         ABCD[subdiag] = c[i + 1]
         if odd_1:
             if order_1 >= 3:
-                supdiag = diagonal[2:order_1:2] - 1
+                supdiag = tuple(diagonal[2:order_1:2] - 1)
                 ABCD[supdiag] = -g[:int((order_1 - 1)/2.)]
         else:
             # rows to have g*(following row) subtracted.
@@ -225,7 +225,7 @@ def stuffABCD(a, g, b, c, form='CRFB'):
                              ABCD[multg + 1, :]
         if odd_2:
             if order_2 >= 3:
-                supdiag = diagonal[order_1 + 1:order:2] - 1
+                supdiag = tuple(diagonal[order_1 + 1:order:2] - 1)
                 ABCD[supdiag] = -g[:int((order_1 - 1)/2.)]
         else:
             # rows to have g*(following row) subtracted.
