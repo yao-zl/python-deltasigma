@@ -99,7 +99,7 @@ def PlotExampleSpectrum(ntf, M=1, osr=64, f0=0, quadrature=False):
     NBW = 1.5/N
     spec0 = fft(v * window)/(M*N/4)
     if not quadrature:
-        freq = np.linspace(0, 0.5, N/2 + 1)
+        freq = np.linspace(0, 0.5, int(N/2) + 1)
         plt.plot(freq, dbv(spec0[:int(N/2) + 1]), 'c', linewidth=1)
         spec_smoothed = circ_smooth(np.abs(spec0)**2., 16)
         plt.plot(freq, dbp(spec_smoothed[:int(N/2) + 1]), 'b', linewidth=3)
