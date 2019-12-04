@@ -15,8 +15,12 @@
 
 """Module providing the axisLabel() function
 """
+import sys
 
-import collections
+if sys.version_info.major==3 and sys.version_info.minor>=3:
+    from collections.abc import Iterable
+else:
+    from collections import Iterable
 
 import numpy as np
 
@@ -51,7 +55,7 @@ def axisLabels(ran, incr):
     ran = np.asarray(ran)
     ran[np.abs(ran) < 1e-6] = 0
     s = []
-    if not isinstance(incr, collections.Iterable):
+    if not isinstance(incr, Iterable):
         incr = int(incr)
         first = 0
     elif len(incr) == 2:

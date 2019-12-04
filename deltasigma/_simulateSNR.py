@@ -18,7 +18,13 @@
 
 from __future__ import division, print_function
 
-import collections
+import sys
+
+if sys.version_info.major==3 and sys.version_info.minor>=3:
+    from collections.abc import Iterable, Callable
+else:
+    from collections import Iterable, Callable
+
 from warnings import warn
 
 import numpy as np
@@ -168,7 +174,7 @@ def simulateSNR(arg1, osr, amp=None, f0=0, nlev=2, f=None, k=13,
     """
     # Look at arg1 and decide if the system is quadrature
     quadrature_ntf = False
-    if isinstance(arg1, collections.Callable):
+    if isinstance(arg1, Callable):
         raise ValueError('There is no support for NTFs described through ' +
                          'a function.')
     elif not isinstance(arg1, np.ndarray):
@@ -189,7 +195,7 @@ def simulateSNR(arg1, osr, amp=None, f0=0, nlev=2, f=None, k=13,
         amp = np.concatenate((np.arange(- 120, -20 + 1, 10),
                               np.array((-15,)),
                               np.arange(-10, 1)))
-    elif not isinstance(amp, collections.Iterable):
+    elif not isinstance(amp, Iterable):
         amp = np.array((amp, ))
     else:
         amp = np.asarray(amp)

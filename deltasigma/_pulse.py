@@ -19,7 +19,12 @@ pulse response of a CT system.
 
 from __future__ import division
 
-import collections
+import sys
+
+if sys.version_info.major==3 and sys.version_info.minor>=3:
+    from collections.abc import Iterable
+else:
+    from collections import Iterable
 
 import numpy as np
 from scipy.signal import lti, step2
@@ -80,8 +85,8 @@ def pulse(S, tp=(0., 1.), dt=1., tfinal=10., nosum=False):
     _, df = rat(tfinal, 1e-3)
     delta_t = 1./lcm(dd, lcm(ddt, df))
     delta_t = max(1e-3, delta_t)    # Put a lower limit on delta_t
-    if (isinstance(S, collections.Iterable) and len(S)) \
-       and (isinstance(S[0], collections.Iterable) and len(S[0])) \
+    if (isinstance(S, Iterable) and len(S)) \
+       and (isinstance(S[0], Iterable) and len(S[0])) \
            and (isinstance(S[0][0], lti) or _is_zpk(S[0][0]) or _is_num_den(S[0][0]) \
                 or _is_A_B_C_D(S[0][0])):
         pass

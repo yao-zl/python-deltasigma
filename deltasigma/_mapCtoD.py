@@ -18,7 +18,6 @@
 
 from __future__ import division, print_function
 
-import collections
 from warnings import warn
 
 import numpy as np

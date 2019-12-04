@@ -18,7 +18,13 @@
 
 from __future__ import division
 
-import collections
+import sys
+
+if sys.version_info.major==3 and sys.version_info.minor>=3:
+    from collections.abc import Iterable
+else:
+    from collections import Iterable
+
 from warnings import warn
 
 import numpy as np
@@ -131,7 +137,7 @@ def simulateDSM(u, arg2, nlev=2, x0=0.):
     # need to set order and form now.
     order = carray(zeros).shape[0] if form == 2 else ABCD.shape[0] - nq
     
-    if not isinstance(x0, collections.Iterable):
+    if not isinstance(x0, Iterable):
         x0 = x0*np.ones((order,), dtype=np.float64)
     else:
         x0 = np.array(x0).reshape((-1,))
