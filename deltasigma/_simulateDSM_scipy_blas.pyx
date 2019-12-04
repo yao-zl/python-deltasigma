@@ -27,6 +27,8 @@
 # Copyright (c) 2014, G. Venturini and the python-deltasigma contributors
 #
 
+# cython: language_level=2
+
 """
 Fast simulator for a generic delta sigma modulator using scipy blas
 ===================================================================

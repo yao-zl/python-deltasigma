@@ -28,6 +28,7 @@
 
 
 # distutils: libraries = cblas
+# cython: language_level=2
 
 """
 Fast simulator for a generic delta sigma modulator using external cblas
