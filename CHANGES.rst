@@ -7,6 +7,17 @@ Version 0.2 series
 The 0.2 series features support for real and quadrature baseband and passband
 modulator topologies.
 
+**0.2.3**: Fix type error in documentation with python 3.5+
+
+**0.2.3rc2**: Add support for numpy 1.14.x/matplotlib 3.0.x/scipy 1.0.x
+ * add scipy 1.0.x support
+ * add matplotlib 3.0.x support
+ * add numpy 1.14.x support
+
+**0.2.3rc1**: Add support for python 3.5 & 3.6
+ * add windows support
+ * add support for support 3.5 & 3.6
+
 **0.2.2**: Add support for scipy 0.16.x.
  * scipy introduced several subclasses for ``scipy.signal.lti``, they are
    now supported.
