@@ -36,7 +36,7 @@ def plotSpectrum(X, fin, fmt='-', **xargs):
     fmt : string, optional
         Formatting to be passed to matplotlib's ``semilogx()``.
 
-    **xargs : dict, optional
+    \**xargs : dict, optional
         Extra arguments to be passed to matplotlib's ``semilogx()``.
 
     Plotting is performed on the current figure.
@@ -63,9 +63,9 @@ def plotSpectrum(X, fin, fmt='-', **xargs):
         Amp = undbv(-3)
         f = 0.3
         N = 2**12
-        f1_bin = np.round(f1*N)
-        f2_bin = np.round(f2*N)
-        fin = np.round(((1 - f)/2*f1 + (f + 1)/2*f2) * N)
+        f1_bin = int(np.round(f1*N))
+        f2_bin = int(np.round(f2*N))
+        fin = int(np.round(((1 - f)/2*f1 + (f + 1)/2*f2) * N))
         t = np.arange(0, N)
         u = Amp*np.cos((2*np.pi/N)*fin*t)
         v, xn, xmax, y = simulateDSM(u, ntf, 2)
@@ -73,7 +73,7 @@ def plotSpectrum(X, fin, fmt='-', **xargs):
         NBW = 1.5/N
         spec0 = fft(v * window)/(N/4)
         freq = np.linspace(0, 0.5, N/2 + 1)
-        plt.plot(freq, dbv(spec0[:N/2 + 1]), 'c', linewidth=1, label='$S$')
+        plt.plot(freq, dbv(spec0[:int(N/2) + 1]), 'c', linewidth=1, label='$S$')
         plotSpectrum(spec0, fin, 'b', linewidth=2.5, label='$\\\\mathrm{plotSpectrum}(S)$')
         Snn = np.abs(evalTF(ntf, np.exp(2j*np.pi*freq)))**2 * 2/12*(delta)**2
         plt.plot(freq, dbp(Snn*NBW), 'm', linewidth=1.5, label='$\\\\mathrm{from\\\\ NTF}$')

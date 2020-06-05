@@ -164,7 +164,7 @@ def simulateDSM(u, arg2, nlev=2, x0=0.):
         OSR = 32
         H = synthesizeNTF(5, OSR, 1)
         N = 8192
-        fB = np.ceil(N/(2*OSR))
+        fB = int(np.ceil(N/(2*OSR)))
         f = 85
         u = 0.5*np.sin(2*np.pi*f/N*np.arange(N))
         v = simulateDSM(u, H)[0]
@@ -180,7 +180,7 @@ def simulateDSM(u, arg2, nlev=2, x0=0.):
         plt.legend()
         plt.subplot(2, 1, 2)
         spec = fft(v*ds_hann(N))/(N/4)
-        plt.plot(np.linspace(0, 0.5, N/2 + 1), dbv(spec[:N/2 + 1]))
+        plt.plot(np.linspace(0, 0.5, N/2 + 1), dbv(spec[:int(N/2) + 1]))
         plt.axis([0, 0.5, -120, 0])
         plt.grid(True)
         plt.ylabel('dBFS/NBW')

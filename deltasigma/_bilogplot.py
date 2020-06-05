@@ -105,9 +105,9 @@ def bilogplot(V, f0, fbin, x, y, **fmt):
         u = 0.5*np.sin(2*np.pi*ftest/N*np.arange(N))
         v, xn, xmax, y = simulateDSM(u, H)
         spec = np.fft.fft(v*ds_hann(N))/(N/4)
-        X = spec[:N/2 + 1]
+        X = spec[:int(N/2) + 1]
         plt.figure()
-        bilogplot(X, f0*N, ftest, (.03, .3, .3), (-140, 0, 10))
+        bilogplot(X, int(f0*N), ftest, (.03, .3, .3), (-140, 0, 10))
 
     """
     V = carray(V)

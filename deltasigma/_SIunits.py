@@ -53,7 +53,7 @@ def SIunits(x):
 
     x : scalar or array_like
             The number for which the engineering notation factor and suffix
-        are to be calculated.
+            are to be calculated.
 
     **Returns:**
 

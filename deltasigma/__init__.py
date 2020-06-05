@@ -138,8 +138,32 @@ On Windows, I hear good things about:
 -  `Anaconda <https://store.continuum.io/cshop/anaconda/>`__, which
    offers its full version for free.
 
-I do not run Windows, so I can't really provide more info (sorry),
-except that people tell me they manage to have a working setup.
+On Windows, need to compile `blas <http://www.netlib.org/blas/blas-3.8.0.tgz>`__
+and `cblas <http://www.netlib.org/blas/blast-forum/cblas.tgz>`__ by
+`Mingw-w64 <http://mingw-w64.org>`__:
+
+.. code-block:: shell
+
+   make ARCH=gfortran ARCHFLAGS="-m[32|64] -shared -o" BLASLIB=libblas.dll RANLIB=echo OPTS="-O3 -m[32|64]" all
+   cd <cblas_src_dir>
+   make ARCH=gcc ARCHFLAGS="-lblas -L<blas_src_dir> -m[32|64] -shared -o" CBLIB=libcblas.dll RANLIB=echo CFLAGS="-O3 -DADD_ -m[32|64] -fPIC" FFLAGS="-O3 -m[32|64]" alllib
+
+   mkdir <blas_cblas_install_dir>
+   mkdir <blas_cblas_install_dir>\lib[32|64]
+   cp <blas_src_dir>\libblas.dll <cblas_src_dir>\src\libcblas.dll <blas_cblas_install_dir>\lib[32|64]
+   mkdir <blas_cblas_install_dir>\include
+   cp <cblas_src_dir>\include\cblas.h <cblas_src_dir>\include\cblas_f77.h <blas_cblas_install_dir>\include
+
+   echo [blas] >> <python_numpy_dir>\distutils\site.cfg
+   echo library_dirs = <blas_cblas_install_dir(replace \ by /)>/lib[32|64] >> <python_numpy_dir>\distutils\site.cfg
+   echo include_dirs = <blas_cblas_install_dir(replace \ by /)>/include >> <python_numpy_dir>\distutils\site.cfg
+   echo libraries = blas, cblas >> <python_numpy_dir>\distutils\site.cfg
+
+When the dependencies are statisfied, run:
+
+.. code-block:: shell
+
+   pip install deltasigma-x.x.x-py3-none-any.whl
 
 *Mac OS X* is also supported by `Enthought
 Canopy <https://www.enthought.com/store/>`__ and
